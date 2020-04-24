@@ -1,3 +1,4 @@
+#builder
 FROM python:3.8.2-slim-buster as builder
 
 WORKDIR /usr/src/app
