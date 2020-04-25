@@ -1,15 +1,16 @@
-from flask.cli import FlaskGroup
+from flask_script import Manager
+from flask_migrate import Migrate, MigrateCommand
 
-from project import app, db
+from src.app import create_app, db
 
-cli = FlaskGroup(app)
 
-@cli.command("create_db")
-def create_db():
-    db.drop_all()
-    db.create_all()
-    db.session.commit()
+app = create_app()
 
-if __name__ == "__main__":
-    cli()
+migrate = Migrate(app=app, db=db)
 
+manager = Manager(app=app)
+
+manager.add_command('db', MigrateCommand)
+
+if __name__ == '__main__':
+  manager.run()
