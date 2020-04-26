@@ -96,7 +96,7 @@ def get_free():
     ser_orders = orders_schema.dump(orders, many=True)
     return custom_responce(ser_orders, 200)
 
-@order_api.route('/order-for-courier=<int:order_id>', methods=['PUT'])
+@order_api.route('/order_edit=<int:order_id>', methods=['PUT'])
 @Auth.auth_required
 def update_by_courier(order_id):
     """
