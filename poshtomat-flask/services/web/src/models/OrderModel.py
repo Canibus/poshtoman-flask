@@ -6,17 +6,18 @@ class OrderModel(db.Model):
     __tablename__ = "orders"
 
     id = db.Column(db.Integer, primary_key=True)
-    timeUp = db.Column(db.DateTime)
-    timeDowm = db.Column(db.DateTime)
-    courierId = db.Column(db.Integer, db.ForeignKey('couriers.id'))
-    postMachineId = db.Column(db.Integer, db.ForeignKey('post_machines.id'))
-    #добавить clientId?
-    clientPhone = db.Column(db.String(128), nullable=False)
-    orderTime = db.Column(db.DateTime)
+    time_up = db.Column(db.DateTime)
+    time_down = db.Column(db.DateTime)
+    courier_id = db.Column(db.Integer, db.ForeignKey('couriers.id'))
+    postmachine_id = db.Column(db.Integer, db.ForeignKey('post_machines.id'))
+    client_id = db.Column(db.Integer, db.ForeignKey('clients.id'))
+    #clientPhone = db.Column(db.String(128), nullable=False)
+    order_time = db.Column(db.DateTime)
 
     def __init__(self, data):
-        self.orderTime = datetime.datetime.utcnow()
-        self.clientPhone = data.get('clientPhone')
+        self.order_time = datetime.datetime.utcnow()
+        self.client_id = data.get('client_id')#clientId
+        #self.clientPhone = data.get('client_phone')
     
     def save(self):
         db.session.add(self)
@@ -26,20 +27,35 @@ class OrderModel(db.Model):
         for key, item in data.items():
             setattr(self, key, item)
         db.session.commit()
+
+    def delete(self):
+        db.session.delete(self)
+        db.session.commit()
+
+    def __repr__(self):
+        return '<id {}>'.format(self.id)
         
     @staticmethod
     def get_all_orders():
-        return Order.query.all()
+        return OrderModel.query.all()
 
     @staticmethod 
     def get_one_order(id):
-        return Order.query.get(id)
+        return OrderModel.query.get(id)
+
+    @staticmethod 
+    def get_order_by_courier_id(courier_id):
+        return OrderModel.query.filter(OrderModel.courier_id==courier_id)
+    @staticmethod 
+    def get_free_order():
+        return OrderModel.query.filter(OrderModel.courier_id==None)
 
 class OrdersSchema(Schema):
     id = fields.Int(dump_only=True)
-    timeUp = fields.Date()
-    timeDowm = fields.Date()
-    courierId = fields.Int(dump_only=True)
-    postMachineId = fields.Int(dump_only=True)
-    clientPhone = fields.Str(required=True)
-    orderTime = fields.Date()
+    time_up = fields.Date()
+    time_down = fields.Date()
+    courier_id = fields.Int()
+    postmachine_id = fields.Int()
+    #clientPhone = fields.Str(required=True)
+    client_id = fields.Int()
+    order_time = fields.Date()

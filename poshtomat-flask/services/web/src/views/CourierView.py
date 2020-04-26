@@ -1,6 +1,6 @@
 from flask import request, json, Response, Blueprint, g
 from ..models import CourierModel, CourierSchema
-from ..shared.AuthenticationCourier import Auth
+from ..shared.Authentication import Auth
 
 courier_api = Blueprint('couriers', __name__)
 couriers_schema = CourierSchema()

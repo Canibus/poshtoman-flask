@@ -1,7 +1,6 @@
 from flask import request, json, Response, Blueprint, g
 from ..models import ClientModel, ClientSchema
-from ..shared.AuthenticationClient import Auth
-
+from ..shared.Authentication import AuthCli
 client_api = Blueprint('clients', __name__)
 client_schema = ClientSchema()
 
@@ -23,11 +22,11 @@ def create():
     client = ClientModel(data)
     client.save()
     ser_data = client_schema.dump(client)
-    token = Auth.generate_token(ser_data.get('id'))#send id from __repr
+    token = AuthCli.generate_token(ser_data.get('id'))#send id from __repr
     return custom_responce({'jwt_token': token}, 201) 
 
 @client_api.route('/', methods=['GET'])
-@Auth.auth_required
+@AuthCli.auth_required
 def get_all():
     """
     Get all clients
@@ -37,7 +36,7 @@ def get_all():
     return custom_responce(ser_clients, 200)
 
 @client_api.route('/<int:client_id>', methods=['GET'])
-@Auth.auth_required
+@AuthCli.auth_required
 def get_a_client(client_id):
     """
     Get a single client
@@ -50,7 +49,7 @@ def get_a_client(client_id):
     return custom_responce(ser_client, 200)
 
 @client_api.route('/me', methods=['PUT'])
-@Auth.auth_required
+@AuthCli.auth_required
 def update():
     """
     Update me
@@ -64,7 +63,7 @@ def update():
     return custom_responce(ser_client, 200)
 
 @client_api.route('/me', methods=['DELETE'])
-@Auth.auth_required
+@AuthCli.auth_required
 def delete():
     """
     Delete a client
@@ -74,7 +73,7 @@ def delete():
     return custom_responce({'message': 'deleted'}, 204)#add responce
 
 @client_api.route('/me', methods=['GET'])
-@Auth.auth_required
+@AuthCli.auth_required
 def get_me():
     """
     Get me
@@ -101,7 +100,7 @@ def login():
     if not client.check_hash(data.get('password')):
         return custom_responce({'error': 'invalid credentials'}, 400)
     ser_data = client_schema.dump(client)
-    token = Auth.generate_token(ser_data.get('id'))
+    token = AuthCli.generate_token(ser_data.get('id'))
     return custom_responce({'jwt_token': token}, 200)
 
 def custom_responce(res, status_code):
