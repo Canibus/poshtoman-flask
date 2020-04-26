@@ -1,11 +1,11 @@
 from . import db, bcrypt
 
 class UserModel(db.Model):
-    __abstract__ = True
+    __abstract__ = True #check for error if missing
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128), nullable=False)
     surname = db.Column(db.String(128), nullable=False)
-    phone = db.Column(db.String(128), unique=True, nullable=False)
+    phone = db.Column(db.String(128), unique=True, nullable=False)#auth for both
     email = db.Column(db.String(128), unique=True, nullable=False)
     password = db.Column(db.String(128), nullable=False)
 
@@ -29,7 +29,7 @@ class UserModel(db.Model):
             if key == 'password':
                 self.password = self.__generate_hash(value)
             setattr(self, key, item)
-        db.sesion.commit()
+        db.session.commit()
 
     def __generate_hash(self, password):
         return bcrypt.generate_password_hash(password, rounds=10).decode("utf-8")
@@ -37,6 +37,6 @@ class UserModel(db.Model):
     def check_hash(self, password):
         return bcrypt.check_password_hash(self.password, password)
 
-    def __repl(self):
+    def __repr__(self):#repl?
         return '<id {}>'.format(self.id)
     

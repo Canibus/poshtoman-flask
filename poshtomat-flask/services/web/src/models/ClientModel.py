@@ -1,6 +1,6 @@
 from .UserModel import UserModel
 from marshmallow import fields, Schema
-
+from .OrderModel import OrdersSchema
 
 class ClientModel(UserModel):
     #miss db.Model inheritence
@@ -25,3 +25,4 @@ class ClientSchema(Schema):
     phone = fields.Str(required=True)
     email = fields.Email(required=True)
     password = fields.Str(required=True, load_only=True)
+    orders = fields.Nested(OrdersSchema, many=True)

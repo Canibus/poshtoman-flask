@@ -18,6 +18,9 @@ def create_app():
   db.init_app(app)
 
   app.register_blueprint(user_blueprint, url_prefix='/api/v1/clients')
+  #app.register_blueprint(user_blueprint, url_prefix='/api/v1/couriers')
+  #app.register_blueprint(user_blueprint, url_prefix='/api/v1/pm')
+  #app.register_blueprint(user_blueprint, url_prefix='/api/v1/orders')
 
   @app.route('/', methods=['GET'])
   def index():

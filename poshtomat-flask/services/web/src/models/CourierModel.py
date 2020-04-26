@@ -15,7 +15,7 @@ class CourierModel(UserModel):
     @staticmethod 
     def get_one_courier(id):
         return Courier.query.get(id)
-
+    
 class CourierSchema(Schema):
     id = fields.Int(dump_only=True)
     name = fields.Str(required=True)
@@ -23,4 +23,3 @@ class CourierSchema(Schema):
     phone = fields.Str(required=True)
     email = fields.Email(required=True)
     password = fields.Str(required=True, load_only=True)
-    

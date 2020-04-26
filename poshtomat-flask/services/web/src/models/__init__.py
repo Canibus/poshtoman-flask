@@ -6,5 +6,5 @@ bcrypt = Bcrypt()
 
 from .CourierModel import CourierModel, CourierSchema
 from .ClientModel import ClientModel, ClientSchema
-from .OrderModel import OrderModel, Orderchema
+from .OrderModel import OrderModel, OrdersSchema
 from .PostmachineModel import PostmachineModel, PostmachineSchema

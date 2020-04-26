@@ -8,12 +8,12 @@ from ..models.ClientModel import ClientModel
 class Auth():
 
     @staticmethod
-    def generate_token(user_id):
+    def generate_token(client_id):
         try:
             payload = {
                 'exp': datetime.datetime.utcnow() + datetime.timedelta(days=1),
                 'iat': datetime.datetime.utcnow(),
-                'sub': user_id
+                'sub': client_id
             }
             return jwt.encode(
                 payload,
@@ -32,7 +32,7 @@ class Auth():
         re = {'data': {}, 'error': {}}
         try:
             payload = jwt.decode(token, os.getenv('JWT_SECRET_KEY'))
-            re['data'] = {'user_id': payload['sub']}
+            re['data'] = {'client_id': payload['sub']}
             return re
         except jwt.ExpiredSignatureError as e1:
             re['error'] = {'message': 'token expired, please login again'}
@@ -59,15 +59,14 @@ class Auth():
                 response=json.dumps(data['error']),
                 status=400
                 )
-                
-            user_id = data['data']['user_id']
-            check_user = UserModel.get_one_user(user_id)
-            if not check_user:
+            client_id = data['data']['client_id']
+            check_client = ClientModel.get_one_client(client_id)
+            if not check_client:
                 return Response(
                 mimetype="application/json",
                 response=json.dumps({'error': 'user does not exist, invalid token'}),
                 status=400
                 )
-            g.user = {'id': user_id}
+            g.client = {'id': client_id}
             return func(*args, **kwargs)
         return decorated_auth

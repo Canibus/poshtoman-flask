@@ -35,7 +35,7 @@ class OrderModel(db.Model):
     def get_one_order(id):
         return Order.query.get(id)
 
-class Orderchema(Schema):
+class OrdersSchema(Schema):
     id = fields.Int(dump_only=True)
     timeUp = fields.Date()
     timeDowm = fields.Date()
