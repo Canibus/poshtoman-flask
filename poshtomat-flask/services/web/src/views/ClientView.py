@@ -1,8 +1,8 @@
 from flask import request, json, Response, Blueprint, g
 from ..models import ClientModel, ClientSchema
-from ..shared.Authentication import Auth
+from ..shared.AuthenticationClient import Auth
 
-client_api = Blueprint('clients', __name__)#clients?
+client_api = Blueprint('clients', __name__)
 client_schema = ClientSchema()
 
 

@@ -10,12 +10,16 @@ class CourierModel(UserModel):
 
     @staticmethod
     def get_all_couriers():
-        return Courier.query.all()
+        return CourierModel.query.all()
     
     @staticmethod 
     def get_one_courier(id):
-        return Courier.query.get(id)
+        return CourierModel.query.get(id)
     
+    @staticmethod
+    def get_courier_by_email(value):
+        return CourierModel.query.filter_by(email=value).first()
+
 class CourierSchema(Schema):
     id = fields.Int(dump_only=True)
     name = fields.Str(required=True)
