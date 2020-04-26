@@ -5,7 +5,7 @@ from ..shared.Authentication import Auth
 cell_api = Blueprint('cells', __name__)
 cell_schema = CellSchema()
 
-
+#add @auth for admin
 @cell_api.route('/', methods=['POST'])
 def create():
     """

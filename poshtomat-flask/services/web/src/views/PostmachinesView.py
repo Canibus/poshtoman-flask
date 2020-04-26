@@ -5,7 +5,7 @@ from ..shared.Authentication import Auth
 pm_api = Blueprint('pms', __name__)
 pm_schema = PostmachineSchema()
 
-
+#add @auth for admin
 @pm_api.route('/', methods=['POST'])
 def create():
     """
@@ -20,7 +20,7 @@ def create():
     return custom_responce(ser_data, 201) 
 
 @pm_api.route('/', methods=['GET'])
-@Auth.auth_required
+#@Auth.auth_required
 def get_all():
     """
     Get all pms
@@ -30,7 +30,7 @@ def get_all():
     return custom_responce(ser_pms, 200)
 
 @pm_api.route('/<int:pm_id>', methods=['GET'])
-@Auth.auth_required
+#@Auth.auth_required
 def get_a_pm(pm_id):
     """
     Get a single pm
@@ -43,7 +43,7 @@ def get_a_pm(pm_id):
     return custom_responce(ser_pm, 200)
 
 @pm_api.route('/<int:pm_id>', methods=['DELETE'])
-@Auth.auth_required
+#@Auth.auth_required
 def delete(pm_id):
     """
     Delete a pm

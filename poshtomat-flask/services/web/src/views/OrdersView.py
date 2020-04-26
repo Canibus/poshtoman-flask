@@ -45,12 +45,12 @@ def get_a_order(order_id):
     
     ser_order = orders_schema.dump(order)
     return custom_responce(ser_order, 200)
-
+'''
 @order_api.route('/order=<int:order_id>', methods=['PUT'])
 @AuthCli.auth_required
 def update(order_id):
     """
-    Update me
+    Update me for client
     """
     req_data = request.get_json()
     order = OrderModel.get_one_order(order_id)
@@ -73,7 +73,7 @@ def delete(order_id):
     order = OrderModel.get_one_order(order_id)
     order.delete()
     return custom_responce({'message': 'deleted'}, 204)#add responce
-'''
+
 #Couriers api
 
 @order_api.route('/courier=<int:courier_id>', methods=['GET'])
@@ -100,7 +100,7 @@ def get_free():
 @Auth.auth_required
 def update_by_courier(order_id):
     """
-    Update me
+    Update order
     """
     req_data = request.get_json()
     order = OrderModel.get_one_order(order_id)
