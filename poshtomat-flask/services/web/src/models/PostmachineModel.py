@@ -1,17 +1,19 @@
 from marshmallow import fields, Schema
 import datetime
 from . import bcrypt, db
-from .CellModel import CellSchema
+
 
 class PostmachineModel(db.Model):
     __tablename__ = "post_machines"
 
     id = db.Column(db.Integer, primary_key=True)
     numbox = db.Column(db.Integer, nullable=False)
+    url = db.Column(db.String(128))
     #isEmpty = db.Column(db.Boolean(), default=True, nullable=False)
 
     def __init__(self, data):
         self.numbox = data.get('numbox')
+        self.url = data.get('url')
 
     def save(self):
         db.session.add(self)
@@ -34,8 +36,13 @@ class PostmachineModel(db.Model):
     def get_one_machine(id):
         return PostmachineModel.query.get(id)
 
+    @staticmethod
+    def get_all_cells_info(id):
+        return PostmachineModel.query.get(id)
+        
+
+
 class PostmachineSchema(Schema):
     id = fields.Int(dump_only=True)
     numbox = fields.Int()
-    cells = fields.Nested(CellSchema, many=True)
-    
+    url = fields.String()

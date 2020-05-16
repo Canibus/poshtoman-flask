@@ -1,6 +1,7 @@
 from flask import request, json, Response, Blueprint, g
 from ..models import PostmachineModel, PostmachineSchema
 from ..shared.Authentication import Auth
+import requests
 
 pm_api = Blueprint('pms', __name__)
 pm_schema = PostmachineSchema()
@@ -52,6 +53,26 @@ def delete(pm_id):
     pm.delete()
     return custom_responce({'message': 'deleted'}, 204)#add responce
 
+@pm_api.route('/<int:pm_id>/cells', methods=['GET'])
+def get_all_cells(pm_id):
+    obj = PostmachineModel.get_all_cells_info(pm_id)
+    ser = pm_schema.dump(obj)
+    res = requests.get(ser['url'])
+
+    return custom_responce(res.json(), 200)
+
+@pm_api.route('/<int:pm_id>/<string:cell_id>/<action>', methods=['GET'])
+def change_pin_status(pm_id, cell_id, action):
+    obj = PostmachineModel.get_all_cells_info(pm_id)
+    ser = pm_schema.dump(obj)
+
+    res = requests.get(ser['url'] + '/' + cell_id + '/' + action)
+    if res:
+        if action == "on":
+            return custom_responce("cell " + cell_id + " was opened", 200)
+        else:
+            return custom_responce("cell " + cell_id + " was closed", 200)
+    #return custom_responce(res.json(), 200)
 
 def custom_responce(res, status_code):
     return Response(

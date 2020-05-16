@@ -4,7 +4,6 @@ from .views.ClientView import client_api as client_blueprint
 from .views.CourierView import courier_api as courier_blueprint
 from .views.PostmachinesView import pm_api as pm_blueprint
 from .views.OrdersView import order_api as order_blueprint
-from .views.CellsView import cell_api as cell_blueprint
 
 def create_app():
   """
@@ -24,7 +23,6 @@ def create_app():
   app.register_blueprint(courier_blueprint, url_prefix='/api/v1/couriers')
   app.register_blueprint(pm_blueprint, url_prefix='/api/v1/pm')
   app.register_blueprint(order_blueprint, url_prefix='/api/v1/orders')
-  app.register_blueprint(cell_blueprint, url_prefix='/api/v1/cells')
 
   @app.route('/', methods=['GET'])
   def index():

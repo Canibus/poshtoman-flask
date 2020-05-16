@@ -2,3 +2,4 @@
 .env.prod
 .env.prod.db
 .vscode/settings.json
+api-v1.postman_collection.json
