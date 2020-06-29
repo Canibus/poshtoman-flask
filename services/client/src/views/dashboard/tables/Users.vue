@@ -251,6 +251,7 @@
 </template>
 <script>
   import axios from 'axios'
+  import config from './config'
   export default {
     data () {
       return {
@@ -396,11 +397,11 @@
 
     methods: {
       initialize () {
-        axios({ url: 'http://127.0.0.1:5000/api/v2/clients/', method: 'GET' })
+        axios({ url: `${config.apiUrl}/api/v2/clients/`, method: 'GET' })
           .then(response => {
             this.items = response.data
           })
-        axios({ url: 'http://127.0.0.1:5000/api/v2/places/', method: 'GET' })
+        axios({ url: `${config.apiUrl}/api/v2/places/`, method: 'GET' })
           .then(response => {
             this.places = response.data
           })
@@ -415,7 +416,7 @@
       deleteItem (item) {
         const index = this.items.indexOf(item)
         confirm('Вы действительно хотите удалить этого пользователя?')
-        axios({ url: 'http://127.0.0.1:5000/api/v2/clients/' + this.items[index].id, method: 'DELETE' })
+        axios({ url: `${config.apiUrl}/api/v2/clients/` + this.items[index].id, method: 'DELETE' })
           .then(response => {
             if (response.status === 204) {
               this.items.splice(index, 1)
@@ -424,7 +425,7 @@
       },
 
       sendSms (phone) {
-        axios({ url: 'http://127.0.0.1:5000/api/v2/clients/verify', data: { phone: phone }, method: 'POST' })
+        axios({ url: `${config.apiUrl}/api/v2/clients/verify`, data: { phone: phone }, method: 'POST' })
           .then(response => {
             if (response.status !== 204) {
               console.log(response.err)
@@ -436,14 +437,14 @@
         this.editedItem.place_id = this.place.id
         console.log(this.editedItem)
         if (this.editedIndex > -1) {
-          axios({ url: 'http://127.0.0.1:5000/api/v2/clients/' + this.items[this.editedIndex].id, data: this.editedItem, method: 'PUT' })
+          axios({ url: `${config.apiUrl}/api/v2/clients/` + this.items[this.editedIndex].id, data: this.editedItem, method: 'PUT' })
             .then(response => {
               if (response.status === 200) {
                 this.items[this.editedIndex] = response.data
               }
             })
         } else {
-          axios({ url: 'http://127.0.0.1:5000/api/v2/clients/register', data: this.editedItem, method: 'POST' })
+          axios({ url: `${config.apiUrl}/api/v2/clients/register`, data: this.editedItem, method: 'POST' })
             .then(response => {
               if (response.status === 201) {
                 this.items.push(this.editedItem)

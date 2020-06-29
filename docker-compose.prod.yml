@@ -12,6 +12,12 @@ services:
       - ./.env.prod
     depends_on:
       - db
+  client:
+    build:
+      context: ./services/client
+      dockerfile: Dockerfile.prod
+    expose:
+      - 80
   db:
     image: postgres:12-alpine
     volumes:
@@ -21,7 +27,9 @@ services:
   nginx:
     build: ./services/nginx
     ports:
-      - 1337:80
+    #  - 1337:80 это было до
+       - 8000:8000 # после
+       - 8001:8000 # после
     depends_on:
       - web
     

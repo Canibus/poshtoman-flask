@@ -6,19 +6,19 @@ admin_api = Blueprint('admins', __name__)
 admin_schema = WebAdminSchema(unknown='EXCLUDE')
 
 
-# @admin_api.route('/register', methods=['POST'])
-# def create():
-#     """
-#     Create a single admin
-#     """
-#     req_data = request.get_json()
-#     data = admin_schema.load(req_data)
+@admin_api.route('/register', methods=['POST'])
+def create():
+    """
+    Create a single admin
+    """
+    req_data = request.get_json()
+    data = admin_schema.load(req_data)
 
-#     admin = WebAdminModel(data)
-#     admin.save()
-#     ser_data = admin_schema.dump(admin)
-#     token = AuthAdmin.generate_token(ser_data.get('id'))#send id from __repr
-#     return custom_responce({'jwt_token': token}, 201) 
+    admin = WebAdminModel(data)
+    admin.save()
+    ser_data = admin_schema.dump(admin)
+    token = AuthAdmin.generate_token(ser_data.get('id'))#send id from __repr
+    return custom_responce({'jwt_token': token}, 201) 
 
 
 @admin_api.route('/login', methods=['POST'])

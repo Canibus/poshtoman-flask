@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import config from './config'
 
 Vue.use(Vuex)
 
@@ -40,7 +41,7 @@ export default new Vuex.Store({
     login ({ commit }, user) {
       return new Promise((resolve, reject) => {
         commit('auth_request')
-        axios({ url: 'http://127.0.0.1:5000/api/v2/admins/login', data: user, method: 'POST' })
+        axios({ url: `${config.apiUrl}/api/v2/admins/login`, data: user, method: 'POST' })
         .then(resp => {
           const token = resp.data.jwt_token
           const user = resp.data.user
