@@ -428,14 +428,13 @@
         axios({ url: `${config.apiUrl}/api/v2/clients/verify`, data: { phone: phone }, method: 'POST' })
           .then(response => {
             if (response.status !== 204) {
-              console.log(response.err)
+              // console.log(response.err)
             }
           })
       },
 
       save () {
         this.editedItem.place_id = this.place.id
-        console.log(this.editedItem)
         if (this.editedIndex > -1) {
           axios({ url: `${config.apiUrl}/api/v2/clients/` + this.items[this.editedIndex].id, data: this.editedItem, method: 'PUT' })
             .then(response => {
@@ -466,7 +465,6 @@
       openOrders (item) {
         const index = this.items.indexOf(item)
         this.orders = this.items[index].orders
-        console.log(this.orders)
         this.ordersDialog = true
       },
     },

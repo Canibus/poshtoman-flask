@@ -18,6 +18,8 @@ def create():
     pm.save()
     ser_data = pm_schema.dump(pm)
 
+    res = requests.get(ser_data['url'])
+
     return custom_responce(ser_data, 201) 
 
 @pm_api.route('/', methods=['GET'])

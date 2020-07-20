@@ -1,7 +1,6 @@
 from flask import request, json, Response, Blueprint, g
 from ..models import PlaceModel, PlaceSchema
 from ..shared.Authentication import AuthAdmin
-import requests
 
 place_api = Blueprint('places', __name__)
 place_schema = PlaceSchema(unknown='EXCLUDE')

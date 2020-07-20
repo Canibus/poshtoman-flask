@@ -5,6 +5,7 @@ services:
     build:
       context: ./services/web
       dockerfile: Dockerfile.prod
+    container_name: gunicorn-server
     command: gunicorn --bind 0.0.0.0:5000 run:app
     expose:
       - 5000
@@ -16,22 +17,27 @@ services:
     build:
       context: ./services/client
       dockerfile: Dockerfile.prod
+    container_name: vue-js-client
+    volumes:
+      - ./client:/app
+      - ./client/node_modules:/app/node_modules
     expose:
       - 80
+    ports:
+      - 80:80
   db:
     image: postgres:12-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - ./.env.prod.db
-  nginx:
-    build: ./services/nginx
-    ports:
-    #  - 1337:80 это было до
-       - 8000:8000 # после
-       - 8001:8000 # после
-    depends_on:
-      - web
+  # nginx:
+  #   build: ./services/nginx
+  #   container_name: nginx
+  #   ports:
+  #       - 80:80
+  #   depends_on:
+  #     - web
     
 
 volumes:

@@ -32,12 +32,6 @@
                 </v-icon>
                 Логи
               </v-tab>
-              <v-tab>
-                <v-icon class="mr-2">
-                  mdi-phone
-                </v-icon>
-                Рассылка
-              </v-tab>
             </v-tabs>
           </template>
 
@@ -46,7 +40,7 @@
             class="transparent"
           >
             <v-tab-item
-              v-for="n in 3"
+              v-for="n in 2"
               :key="n"
             >
               <v-card-text>
@@ -174,46 +168,25 @@
         tasks: {
           0: [
             {
-              text: 'fuasdkjasnbfkjasbfkjhasbfijyhjbasf',
+              text: 'Не работает кнопка добавить баг',
             },
             {
-              text: 'fuasdkjasnbfkjasbfkjhasbfijyhjbasf',
-            },
-            {
-              text: 'fuasdkjasnbfkjasbfkjhasbfijyhjbasf',
-            },
-            {
-              text: 'fuasdkjasnbfkjasbfkjhasbfijyhjbasf',
+              text: 'Не работают уведомления',
             },
           ],
           1: [
             {
-              text: 'fuasdkjasnbfkjasbfkjhasbfijyhjbasf',
+              text: 'Пользователь admin добавил место расположения id 1',
             },
             {
-              text: 'fuasdkjasnbfkjasbfkjhasbfijyhjbasf',
+              text: 'Пользователь admin добавил устройство id 2',
               value: false,
-            },
-          ],
-          2: [
-            {
-              text: 'fuasdkjasnbfkjasbfkjhasbfijyhjbasf',
-              value: false,
-            },
-            {
-              text: 'fuasdkjasnbfkjasbfkjhasbfijyhjbasf',
-              value: true,
-            },
-            {
-              text: 'fuasdkjasnbfkjasbfkjhasbfijyhjbasf',
-              value: true,
             },
           ],
         },
         list: {
           0: false,
           1: false,
-          2: false,
         },
       }
     },

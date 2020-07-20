@@ -75,10 +75,9 @@
       login: function () {
         const login = this.name
         const password = this.password
-        console.log(name, password)
         this.$store.dispatch('login', { login, password })
           .then(() => this.$router.push('/'))
-          .catch(err => console.log(err))
+          // .catch(err => console.error(err))
       },
     },
   }

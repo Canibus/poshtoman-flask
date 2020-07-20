@@ -42,6 +42,13 @@ class CellModel(db.Model):
     def get_one_cell(id):
         return CellModel.query.get(id)
         
+    @staticmethod 
+    def get_all_pm_cells(pm_id):
+        return CellModel.query.filter(CellModel.pm_id==pm_id)
+
+    @staticmethod
+    def get_free_cells(pm_id):
+        return CellModel.query.filter(CellModel.pm_id==pm_id, CellModel.isRent==False, CellModel.isMTC==False)
 
 
 class CellSchema(Schema):

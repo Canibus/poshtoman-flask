@@ -18,13 +18,19 @@ def create():
     req_data = request.get_json()
     data = client_schema.load(req_data, partial=True)
 
-    # client_in_db = ClientModel.get_client_by_email(data.get('email'))
-    # if client_in_db:
-    #     message = {'error': 'client already exist, please supply another email address'}
-    #     return custom_responce(message, 400)
+    #проверить
+    client_in_db_email = ClientModel.get_client_by_email(data.get('email'))
+    client_in_db_phone = ClientModel.get_client_by_phone(data.get('phone'))
+    if client_in_db_email:
+        message = {'error': 'this email already exist, please supply another email address'}
+        return custom_responce(message, 400)
+    
+    if client_in_db_phone:
+        message = {'error': 'this phone already exist, please supply another phone number'}
+        return custom_responce(message, 400)
         
     if Token.check_verification_token(req_data.get('phone'), req_data.get('sms')) == False:
-        message = {'error': 'invalid token'}
+        message = {'error': 'invalid sms code'}
         return custom_responce(message, 400)
     client = ClientModel(data)
     client.save()
@@ -146,6 +152,8 @@ def get_me():
     Get me
     """
     client = ClientModel.get_one_client(g.client.get('id'))
+    if not client:
+        return custom_responce({'error': 'could not get user data'}, 400)
     ser_client = client_schema.dump(client)
     return custom_responce(ser_client, 200)
 

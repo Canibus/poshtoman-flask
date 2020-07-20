@@ -7,6 +7,7 @@ from .views.PostmachinesView import pm_api as pm_blueprint
 from .views.OrdersView import order_api as order_blueprint
 from .views.PlaceView import place_api as place_blueprint
 from .views.AdminView import admin_api as admin_blueprint
+from .views.CellView import cell_api as cell_blueprint
 from flask_jwt_extended import JWTManager
 from .shared import LoggingMiddleware as middleware
 
@@ -32,6 +33,7 @@ def create_app():
   app.register_blueprint(order_blueprint, url_prefix='/api/v2/orders')
   app.register_blueprint(place_blueprint, url_prefix='/api/v2/places')
   app.register_blueprint(admin_blueprint, url_prefix='/api/v2/admins')
+  app.register_blueprint(cell_blueprint, url_prefix='/api/v2/cells')
 
 
   @app.route('/', methods=['GET'])
